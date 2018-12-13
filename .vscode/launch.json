@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - SimpleDNS",
+            "request": "launch",
+            "mainClass": "edu.wisc.cs.sdn.simpledns.SimpleDNS",
+            "projectName": "assign4"
+        }
+    ]
+}

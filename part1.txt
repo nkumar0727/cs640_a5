@@ -1,0 +1,87 @@
+1a)
+
+10 DNS Lookups were performed:
+    www.code.org
+    code.org
+    cdn.optimizely.com
+    www.googletagmanager.com
+    www.google-analytics.com
+    js-agent.newrelic.com
+    oscp.digicert.com
+    facebook.com
+    twitter.com
+    bam.nr-data.net
+
+Of these 10, 0 are redundant, as none of them are repeated again during
+the connection.
+
+1b)
+
+    ===========================================================================
+    Client's First Lookup: www.code.org
+    ---------------------------------------------------------------------------
+
+    Name Server Queried             Records Returned
+    a.root-servers.net              org, NS, a0.org.afilias-nst.info
+                                    a0.org.afilias-nst.info, A, 199.19.56.1
+                                    a0.org.afilias-nst.info, AAAA, 2001:500:e:1
+
+    a0.org.afilias-nst.info         code.org, NS, ns-1497.awsdns-59.org
+                                    ns-1497.awsdns-59.org, A, 205.251.197.217
+
+    ns-1497.awsdns-59.org           www.code.org, A, 52.205.188.91
+    ===========================================================================
+
+1c)
+
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    In Local DNS Cache:
+    ---------------------------------------------------------------------------
+
+    org, NS, a0.org.afilias-nst.info
+    a0.org.afilias-nst.info, A, 199.19.56.1
+
+    code.org, NS, ns-1497.awsdns-59.org
+    ns-1497.awsdns-59.org, A, 205.251.197.217
+
+    www.code.org, A, 52.205.188.91
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    ===========================================================================
+    Client's First Lookup: www.code.org
+    ---------------------------------------------------------------------------
+   
+    Name Server Queried             Records Returned
+    ns-1497.awsdns-59.org           code.org, A, 52.222.219.194
+    ===========================================================================
+
+2a)
+    The following domain names resolve to an Amazon EC2 node:
+        www.code.org
+
+2b)
+    The following domain names resolve to a node in the Akamai CDN:
+        cdn.optimizely.com
+    The following domain names resolve to a node in the EdgeCast CDN:
+        ocsp.digicert.com
+
+2c) ????????????????
+
+    28 requests to code.org (AWS Cloudfront CDN node) 
+        All of these were issued under one single connection
+
+    2 requests to ocsp.digicert.com (EdgeCast CDN node)
+        These were issued under one single connection
+
+    1 request to cdn.optimizely.com (Akamai CDN node)
+        This was issued under one single connection
+
+2d) ????????????????
+    All objects in code.org domain, except for the following, were stored in Cloudfront CDN caches:
+        https://code.org/v2/client-location
+    
+    The following objects were also cache hits:
+        http://ocsp.digicert.com/MHEwbzBNMEswSTAJBgUrDgMCGgUABBTfqhLjKLEJQZPin0KCzkdAQpVYowQUsT7DaQP4v0cB1JgmGggC72NkK8MCEAx5qUSwjBGVIJJhX%2BJrHYOiHjAcMBoGCSsGAQUFBzABBAQNMAsGCSsGAQUFBzABAQ%3D%3D
+        http://ocsp.digicert.com/MHEwbzBNMEswSTAJBgUrDgMCGgUABBRJ9L2KGL92BpjF3kAtaDtxauTmhgQUPdNQpdagre7zSmAKZdMh1Pj41g8CEA5nVynmckb3Gl3lxhei%2BVGiHjAcMBoGCSsGAQUFBzABBAQNMAsGCSsGAQUFBzABAQ%3D%3D
+
+
