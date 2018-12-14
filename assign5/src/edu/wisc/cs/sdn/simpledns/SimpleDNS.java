@@ -3,6 +3,10 @@ import edu.wisc.cs.sdn.simpledns.packet.DNS;
 import edu.wisc.cs.sdn.simpledns.packet.DNSQuestion;
 import edu.wisc.cs.sdn.simpledns.packet.DNSResourceRecord;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -15,7 +19,56 @@ public class SimpleDNS
     private static final int DNS_SERVER_LISTEN_PORT = 8053;
     private static final int DNS_OUTBOUND_PORT = 53;
     private static final int PACKET_BUFFER_SIZE = 4092;
+    private static final String FILE_NAME = "ec2.csv";
 
+    private static List<String> awsRegions;
+
+    public static void loadCSV() {
+        awsRegions = new ArrayList<>();
+        BufferedReader reader = null;
+        FileReader file = null;
+        try {
+            file = new FileReader(FILE_NAME);
+            reader = new BufferedReader(file);
+            String currentLine;
+            while((currentLine = reader.readLine()) != null) {
+                currentLine = currentLine.trim();
+                if (!currentLine.isEmpty())
+                    awsRegions.add(currentLine);
+            }
+        }
+        catch (IOException e) {
+            System.out.println("IO Exception");
+        }
+    }
+
+    private static String getMatchingEC2Region(final InetAddress ipAddress) {
+
+        final ByteBuffer addressBuffer = ByteBuffer.wrap(ipAddress.getAddress());
+        final int ipAddressInt = addressBuffer.getInt();
+
+        for (String s : awsRegions) {
+            final String[] record = s.split(",");
+            final String[] ipAddressCidr = record[0].split("/");
+            final String ipSegment = ipAddressCidr[0];
+            final String maskSegment = ipAddressCidr[1];
+            final String region = record[1];
+
+            final InetAddress ipSegmentInet = InetAddress.getByName(ipSegment);
+            final ByteBuffer ipSegmentBuffer = ByteBuffer.wrap(ipSegmentInet.getAddress());
+            final int ipSegmentInt = ipSegmentBuffer.getInt();
+            final int maskSegmentInt = Integer.parseInt(maskSegment);
+
+            final int recordResult = ipSegmentInt & maskSegmentInt;
+            final int inputIPResult = ipAddressInt & maskSegmentInt;
+
+            if (recordResult == inputIPResult) {
+                return region;
+            }
+        }
+
+        return null;
+    }
 
     public static boolean isValidQueryType(DNS dns) {
 
@@ -48,7 +101,7 @@ public class SimpleDNS
     	for (DNSQuestion question : questionList) {
     		type = question.getType();
     		if (type != DNS.TYPE_A && type != DNS.TYPE_AAAA && 
-    				type != DNS.TYPE_CNAME && type != TYPE_NS) {
+    				type != DNS.TYPE_CNAME && type != DNS.TYPE_NS) {
     			return false;
     		}
     	}
@@ -117,6 +170,7 @@ public class SimpleDNS
             return false;
         }
 
+        /*
         final List<DNSResourceRecord> answerSection = dnsResponse.getAnswers();
         for (DNSResourceRecord answer : answerSection) {
             if (answer.getType() == DNS.TYPE_A) {
@@ -125,6 +179,7 @@ public class SimpleDNS
                 return false;
             }
         }
+        */
 
         return true;
     }
@@ -141,7 +196,12 @@ public class SimpleDNS
         DatagramSocket clientToSimpleDNSSocket = null;
         DatagramSocket simpleDNSToRealDNSSocket = null;
 
+        List<DNSResourceRecord> finalAnswerList = new ArrayList<>();
+
         try {
+
+            loadCSV();
+
             // extract info from arguments
             final String ec2CSVPath = args[3];
             String realDNSIPString = args[1];
@@ -199,6 +259,14 @@ public class SimpleDNS
                 System.out.println("DNS Section: "+dnsRequestCreatedFromResponse.toString());
                 simpleDNSToRealDNSSocket.send(dnsPacketForRealDNSServer);
             }
+
+            /**
+             * Exctract IP Address from A record in dnsResponseFromServer Answers.
+             * Then call getMatchingEC2Region() and see if it's null.
+             * If null, don't do anything.
+             * If not null, this string must be added to the Answers portion of the dnsResponseFromServer.
+             * Then we must serialize this, put it into a datagram packet, then send it to the client.
+             */
 
             responseFromRealDNSPacket = convertDNSRequestToDatagramPacket(dnsResponseFromServer,
                     clientDestinationAddress, clientDestinationPort);
