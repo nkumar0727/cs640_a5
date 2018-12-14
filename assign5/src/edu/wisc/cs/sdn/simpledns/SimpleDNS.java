@@ -1,19 +1,21 @@
 package edu.wisc.cs.sdn.simpledns;
 import edu.wisc.cs.sdn.simpledns.packet.DNS;
 import edu.wisc.cs.sdn.simpledns.packet.DNSQuestion;
+import edu.wisc.cs.sdn.simpledns.packet.DNSResourceRecord;
 
 import java.util.List;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-public class SimpleDNS 
+
+public class SimpleDNS
 {
 
     private static final int DNS_SERVER_LISTEN_PORT = 8053;
     private static final int DNS_OUTBOUND_PORT = 53;
-    
     private static final int PACKET_BUFFER_SIZE = 4092;
+
 
     public static boolean isValidQueryType(DNS dns) {
 
@@ -46,37 +48,89 @@ public class SimpleDNS
     	for (DNSQuestion question : questionList) {
     		type = question.getType();
     		if (type != DNS.TYPE_A && type != DNS.TYPE_AAAA && 
-    				type != DNS.TYPE_CNAME && type != DNS.TYPE_NS) {
+    				type != DNS.TYPE_CNAME && type != TYPE_NS) {
     			return false;
     		}
     	}
     	
     	return true;
     }
-    
+    private static boolean walterWhiteIsHeisenberg() {
+        return true;
+    }
     private static boolean canHandleDNSRequest(final DNS dnsRequest) {
     	return dnsRequest.getOpcode() == 0 && dnsRequest.isQuery() && 
     			areQuestionsValidTypes(dnsRequest.getQuestions());
     }
     
-    private static DatagramPacket convertDNSRequestToDatagramPacket(final DNS dnsRequest, 
-    		final InetAddress destinationIPAddress, final int destinationPort) {
+    private static DatagramPacket convertDNSRequestToDatagramPacket(final DNS dnsRequest,
+    	final InetAddress destinationIPAddress, final int destinationPort) {
     	
     	final byte[] buffer = dnsRequest.serialize();
     	final DatagramPacket packet = new DatagramPacket(buffer, buffer.length, 
     			destinationIPAddress, destinationPort);
     	return packet;
     }
-    /*
-    public static void handleRicinQuery(DNS dns) {
 
-        if(dns.getId() == DNS.TYPE_A || dns.getId() == DNS.TYPE_AAAA) {
-            for(int i = 0; i < dns.getQuestions().size(); i++) {
-                if(dns.getQuestions().get(i).)
+    private static String getNewDNSRootIP(final DNS dnsResponse) {
+
+        final List<DNSResourceRecord> authoritySection = dnsResponse.getAuthorities();
+        DNSResourceRecord firstNSRecord = null;
+        for (DNSResourceRecord d : authoritySection) {
+            //NS is of type 2
+            if(d.getType() == DNS.TYPE_NS) {
+                firstNSRecord = d;
+                System.out.println("Found NS Record");
+                break;
+            }
+
+        }
+        final List<DNSResourceRecord> additionalSection = dnsResponse.getAdditional();
+        DNSResourceRecord additionalNSRecord = null;
+        for(DNSResourceRecord d : additionalSection) {
+            //A is of type 1
+            if(d.getName().equals(firstNSRecord.getData().toString()) && d.getType() == DNS.TYPE_A) {
+                additionalNSRecord = d;
+                System.out.println("Found Additional NS Record");
+                break;
             }
         }
+        String ipAddress = additionalNSRecord.getData().toString();
+        System.out.println("IP Address for new Query: " + ipAddress);
+        return ipAddress;
     }
-    */
+
+    private static DNS generateDNSRequestFromDNSResponse(final DNS dnsResponse) {
+
+        final DNS dnsRequest = new DNS();
+
+        dnsRequest.setId(dnsResponse.getId());
+        dnsRequest.setOpcode(DNS.OPCODE_STANDARD_QUERY);
+        dnsRequest.setQuery(true);
+        dnsRequest.addQuestion(dnsResponse.getQuestions().get(0));
+
+        return dnsRequest;
+    }
+
+    private static boolean isDNSResponseResolved(final DNS dnsResponse) {
+        if (dnsResponse.getRcode() != 0 || dnsResponse.getAnswers().size() == 0) {
+            return false;
+        }
+
+        final List<DNSResourceRecord> answerSection = dnsResponse.getAnswers();
+        for (DNSResourceRecord answer : answerSection) {
+            if (answer.getType() == DNS.TYPE_A) {
+                return true;
+            } else if (answer.getType() == DNS.TYPE_CNAME) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // TODO: OPT PSEUDOSECTION in final dns response?
+    // TODO: CNAME resolution
 	public static void main(String[] args)
 	{
         if(!args[0].equals("-r") || !args[2].equals("-e") || args.length != 4) {
@@ -84,70 +138,84 @@ public class SimpleDNS
             return;
         }
 
-        DatagramSocket clientToSimpleDNS = null;
-        DatagramSocket simpleDnsToRealDNS = null;
+        DatagramSocket clientToSimpleDNSSocket = null;
+        DatagramSocket simpleDNSToRealDNSSocket = null;
 
         try {
             // extract info from arguments
             final String ec2CSVPath = args[3];
-            final String realDNSIPString = args[1];
-            final InetAddress realDNSIPAddress = InetAddress.getByName(realDNSIPString);
+            String realDNSIPString = args[1];
+            InetAddress realDNSIPAddress = InetAddress.getByName(realDNSIPString);
 
             // establish socket connections
-            clientToSimpleDNS = new DatagramSocket(DNS_SERVER_LISTEN_PORT);
-            simpleDnsToRealDNS = new DatagramSocket();
-            simpleDnsToRealDNS.connect(ipAddr, DNS_OUTBOUND_PORT);
+            clientToSimpleDNSSocket = new DatagramSocket(DNS_SERVER_LISTEN_PORT);
+            simpleDNSToRealDNSSocket = new DatagramSocket();
+            simpleDNSToRealDNSSocket.connect(realDNSIPAddress, DNS_OUTBOUND_PORT);
 
-            final DatagramPacket packet = waitForAndReceiveDatagramPacketInSocket(clientToSimpleDNS);
-            final DNS dnsRequestFromClient = convertDatagramPacketToDNS(packet);
-            
+            final DatagramPacket requestFromClientPacket = waitForAndReceiveDatagramPacketInSocket(clientToSimpleDNSSocket);
+            final DNS dnsRequestFromClient = convertDatagramPacketToDNS(requestFromClientPacket);
+            System.out.println("Client DNS Request ID: "+dnsRequestFromClient.getId());
+
             if (!canHandleDNSRequest(dnsRequestFromClient)) {
-            	 System.out.println("Not servicing this kind of DNS packet: "+dnsRequestFromClient.toString());
-                 return;
+                System.out.println("Not servicing this kind of DNS packet: "+dnsRequestFromClient.toString());
+                return;
             }
-            
-            // determine where to send client response to
-            final int clientInboundPort = packet.getPort();
-            final InetAddress clientInboundAddress = packet.getAddress();
-            
-            // 
-          
-            final DatagramPacket dnsPacketForRealDNSServer = 
-            		convertDNSRequestToDatagramPacket(dnsRequestFromClient, );
-            
 
-            // send DNS request from our DNS server to REAL DNS server provided in args
-            buffer = dnsRequestFromClient.serialize();
-            DatagramPacket dnsPacketSentToServer = new DatagramPacket(buffer,
-                    buffer.length, ipAddr, 53);
-            simpleDnsToRealDNS.send(dnsPacketSentToServer);
-            System.out.println("+++++ Sent: "+dnsPacketSentToServer.toString()+" +++++++");
+            final int clientDestinationPort = requestFromClientPacket.getPort();
+            final InetAddress clientDestinationAddress = requestFromClientPacket.getAddress();
+            DatagramPacket dnsPacketForRealDNSServer =
+                    convertDNSRequestToDatagramPacket(dnsRequestFromClient, realDNSIPAddress, DNS_OUTBOUND_PORT);
 
-            // wait for DNS response from REAL DNS server
-            buffer = new byte[10240];
-            DatagramPacket dnsResolution = new DatagramPacket(buffer, buffer.length);
-            simpleDnsToRealDNS.receive(dnsResolution);
+            simpleDNSToRealDNSSocket.send(dnsPacketForRealDNSServer);
+            System.out.println("+++++ Sent: "+dnsPacketForRealDNSServer.toString()+" +++++++");
 
-            // TODO: possibly remove
-            buffer = dnsResolution.getData();
-            DNS response = DNS.deserialize(buffer, buffer.length);
-            buffer = response.serialize();
+            DatagramPacket responseFromRealDNSPacket = null;
+            DNS dnsResponseFromServer = null;
 
-            // send DNS response from our DNS back to client
-            dnsResolution = new DatagramPacket(buffer, buffer.length, clientAddress, clientPort);
-            clientToSimpleDNS.send(dnsResolution);
-            System.out.println("+++++ Sent: "+dnsResolution.getAddress()+" +++++++");
+            while (walterWhiteIsHeisenberg()) {
+
+                responseFromRealDNSPacket = waitForAndReceiveDatagramPacketInSocket(simpleDNSToRealDNSSocket);
+                dnsResponseFromServer = convertDatagramPacketToDNS(responseFromRealDNSPacket);
+
+                System.out.println("DNS Server response ID: "+dnsResponseFromServer.getId());
+                /**
+                 * Modify dnsPacketForRealDNSServer using info from dnsResponseFromServer if not resolved.
+                 */
+
+                // check if not resolved
+                if (isDNSResponseResolved(dnsResponseFromServer)) {
+                    break;
+                }
+
+                realDNSIPString = getNewDNSRootIP(dnsResponseFromServer);
+                realDNSIPAddress = InetAddress.getByName(realDNSIPString);
+                simpleDNSToRealDNSSocket.connect(realDNSIPAddress, DNS_OUTBOUND_PORT);
+
+                final DNS dnsRequestCreatedFromResponse = generateDNSRequestFromDNSResponse(dnsResponseFromServer);
+                dnsPacketForRealDNSServer = convertDNSRequestToDatagramPacket(dnsRequestCreatedFromResponse,
+                        realDNSIPAddress, DNS_OUTBOUND_PORT);
+
+                System.out.println("Sending: "+dnsPacketForRealDNSServer.toString());
+                System.out.println("DNS Section: "+dnsRequestCreatedFromResponse.toString());
+                simpleDNSToRealDNSSocket.send(dnsPacketForRealDNSServer);
+            }
+
+            responseFromRealDNSPacket = convertDNSRequestToDatagramPacket(dnsResponseFromServer,
+                    clientDestinationAddress, clientDestinationPort);
+            clientToSimpleDNSSocket.send(responseFromRealDNSPacket);
+            System.out.println("+++++ Sent: "+responseFromRealDNSPacket.getAddress()+" +++++++");
+
 
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            if (clientToSimpleDNS != null) {
+            if (clientToSimpleDNSSocket != null) {
                 System.out.println("Closed clientToSimpleDns");
-                clientToSimpleDNS.close();
+                clientToSimpleDNSSocket.close();
             }
-            if (simpleDnsToRealDNS != null) {
+            if (simpleDNSToRealDNSSocket != null) {
                 System.out.println("Closed simpleDnsToRealDns");
-                simpleDnsToRealDNS.close();
+                simpleDNSToRealDNSSocket.close();
             }
         }
     }
