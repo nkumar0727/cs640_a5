@@ -33,4 +33,4 @@ classes: $(CLASSES:.java=.class)
 
 clean:
 		$(RM) edu/wisc/cs/sdn/simpledns/packet/*.class
-		$(RM) edu/wisc/cs/sdn/simpledns/SimpleDNS.class
+		$(RM) edu/wisc/cs/sdn/simpledns/*.class
