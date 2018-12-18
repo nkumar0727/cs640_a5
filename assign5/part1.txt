@@ -1,3 +1,4 @@
+CS logins: nkumar, briggs
 1a)
 
 10 DNS Lookups were performed:
@@ -62,12 +63,21 @@ the connection.
 2b)
     The following domain names resolve to a node in the Akamai CDN:
         cdn.optimizely.com
-    ** The following domain names resolve to a node in the EdgeCast CDN:
-        ocsp.digicert.com
-   
-    ** However, this was determined via a list of IP addresses found on the following form
 
-2c) ????????????????
+        > Upon trying to resolve cnd.
+
+    The following domain names resolve to a node in the EdgeCast CDN:
+        ocsp.digicert.com
+
+    It was found that ocsp.digicert.com resolves to CNAME cs9.wac.phicdn.net. The following site
+    tells us that the alias resolves to the IP 72.21.91.29. This IP seems to match with the CIDR
+    records found in this list on the following support forum.
+        > https://support.globaldots.com/hc/en-us/articles/115004003849-Edgecast-IP-addresses
+
+    However, there is no evidence on the datasheet given in the assignment that this domain name
+    resolves to a node in the EdgeCast CDN.
+
+2c)
 
     28 requests to code.org (AWS Cloudfront CDN node) 
         All of these were issued under one single connection
@@ -78,8 +88,8 @@ the connection.
     1 request to cdn.optimizely.com (Akamai CDN node)
         This was issued under one single connection
 
-2d) ????????????????
-    There were in total, 28 cache hits.
+2d)
+    There were in total, 31 cache hits.
 
     All objects in code.org domain, except for the following, were stored in Cloudfront CDN caches:
         https://code.org/v2/client-location

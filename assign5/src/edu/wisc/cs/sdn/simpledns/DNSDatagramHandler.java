@@ -14,7 +14,7 @@ class DNSDatagramHandler {
     static void printDNS(final DNS dns, final InetAddress rootServerIP, final String msg) {
         System.out.println("===================================================================");
         System.out.println(msg);
-        System.out.printf("<Root DNS Server IP: %s\n", rootServerIP.getHostAddress());
+        System.out.printf("<Root DNS Server IP: %s>\n", rootServerIP.getHostAddress());
         System.out.println(dns.toString());
         System.out.println("===================================================================");
     }

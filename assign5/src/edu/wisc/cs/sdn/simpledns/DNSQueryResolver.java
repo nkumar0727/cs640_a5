@@ -40,7 +40,6 @@ class DNSQueryResolver {
             throws IOException {
 
         final String nextNameServer = DNSDatagramHandler.findNextNameserverFromDNSResponse(dnsResponse);
-        System.out.println("Next NameServer: "+nextNameServer);
         final DNS nextNameserverRequest = generateNextNameserverRequest(dnsResponse, nextNameServer);
         final DNS nextNameserverResponse = resolveQueryRecursive(nextNameserverRequest, rootServerAddress);
         final String nextServerIP = nextNameserverResponse.getAnswers().get(0).getData().toString();
@@ -70,9 +69,9 @@ class DNSQueryResolver {
 
         while (true) {
 
-  //          DNSDatagramHandler.printDNS(currentDNSQuery, currentRootServerAddress, "Recursive Query Sub-Request");
+            DNSDatagramHandler.printDNS(currentDNSQuery, currentRootServerAddress, "Recursive Query Sub-Request");
             final DNS dnsResponse = resolveQueryNonRecursive(currentDNSQuery, currentRootServerAddress);
-//            DNSDatagramHandler.printDNS(dnsResponse, currentRootServerAddress, "Response for Recursive Query Sub-Request");
+            DNSDatagramHandler.printDNS(dnsResponse, currentRootServerAddress, "Response for Recursive Query Sub-Request");
 
             if (!dnsResponse.getAnswers().isEmpty()) {
                 dnsResponse.setId(dnsQuery.getId());
