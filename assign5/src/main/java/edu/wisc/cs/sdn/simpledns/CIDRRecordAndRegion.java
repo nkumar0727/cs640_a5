@@ -14,6 +14,10 @@ class CIDRRecordAndRegion {
         return region;
     }
 
+    public String toString() {
+        return String.format("%s,%s", cidrRecord.toString(), region);
+    }
+
     boolean isMatchingIPAddress(final int ipAddress) {
         return cidrRecord.isMatchingIPAddress(ipAddress);
     }

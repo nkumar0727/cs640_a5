@@ -28,12 +28,6 @@ class CSVLoader {
         }
     }
 
-    /**
-     * Gets corresponding region of matching cidr record.
-     * Null if no match.
-     *
-     * @return
-     */
     String getRegionOfIPAddress(final String ipDottedDecimal) throws UnknownHostException {
 
         final int ipAddress = CIDRConverter.convertDottedDecimalStringToIPAddressInteger(ipDottedDecimal);

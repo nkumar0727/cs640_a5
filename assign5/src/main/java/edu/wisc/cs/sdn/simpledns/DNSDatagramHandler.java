@@ -11,12 +11,24 @@ import java.util.List;
 
 class DNSDatagramHandler {
 
+    static void printDNS(final DNS dns, final InetAddress rootServerIP, final String msg) {
+        System.out.println("===================================================================");
+        System.out.println(msg);
+        System.out.printf("<Root DNS Server IP: %s\n", rootServerIP.getHostAddress());
+        System.out.println(dns.toString());
+        System.out.println("===================================================================");
+    }
+
     static short extractRequestTypeFromDNSHeader(final DNS dnsHeader) {
         return dnsHeader.getQuestions().get(0).getType();
     }
 
     static DNS extractDNSHeaderFromDatagramPacket(final DatagramPacket packet) {
         return DNS.deserialize(packet.getData(), packet.getLength());
+    }
+
+    static String extractCNAMEAnswerFromDNSResponse(final DNS dnsResponse) throws NullPointerException {
+        return dnsResponse.getAnswers().get(0).getData().toString();
     }
 
     static DatagramPacket convertDNSHeaderToDatagramPacket(final DNS dnsHeader,
@@ -47,45 +59,9 @@ class DNSDatagramHandler {
                 && areQuestionsValidTypes(dnsRequest.getQuestions());
     }
 
-    static boolean dnsResponseContains_CNAMERecord(final DNS dnsResponse) {
-        for (DNSResourceRecord dnsResourceRecord : dnsResponse.getAnswers()) {
-            if (dnsResourceRecord.getType() == DNS.TYPE_CNAME) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    static DNS generateDNSResponse(final DNS dnsRequest, final List<DNSResourceRecord> answerList) {
-        final DNS dnsResponse = new DNS();
-
-        dnsResponse.setId(dnsRequest.getId());
-        dnsResponse.setAnswers(answerList);
-        dnsResponse.setQuery(false);
-        dnsResponse.setRcode(DNS.RCODE_NO_ERROR);
-        dnsResponse.setRecursionDesired(false);
-        dnsResponse.setRecursionAvailable(false);
-        dnsResponse.setQuestions(dnsRequest.getQuestions());
-
-        return dnsResponse;
-    }
-
     static String findNextNameserverFromDNSResponse(final DNS dnsResponse) throws IllegalArgumentException {
         final DNSResourceRecord firstNameserverRecord = findFirstRecordInList(dnsResponse.getAuthorities(), DNS.TYPE_NS);
         return firstNameserverRecord.getData().toString();
-    }
-
-    static DNS generateDNSRequest(final DNSQuestion dnsQuestion, final short dnsId) {
-        final DNS dnsRequest = new DNS();
-
-        dnsRequest.setId(dnsId);
-        dnsRequest.setOpcode(DNS.OPCODE_STANDARD_QUERY);
-        dnsRequest.setQuery(true);
-        dnsRequest.addQuestion(dnsQuestion);
-        //dnsRequest.setRecursionDesired(true);
-
-        return dnsRequest;
     }
 
     static InetAddress getNextCachedNameserver(final DNS dnsResponse) throws UnknownHostException {
@@ -103,6 +79,16 @@ class DNSDatagramHandler {
         return null;
     }
 
+    static boolean dnsResponseContainsRecordType(final DNS dnsResponse, final short recordType) {
+        for (DNSResourceRecord record : dnsResponse.getAnswers()) {
+            if (record.getType() == recordType) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private static DNSResourceRecord findFirstRecordInList(final List<DNSResourceRecord> recordList,
                                                            final short type) throws IllegalArgumentException {
 
@@ -113,9 +99,5 @@ class DNSDatagramHandler {
         }
 
         throw new IllegalArgumentException("Could not find record of type "+type);
-    }
-
-    static String extractCNAMEAnswerFromDNSResponse(final DNS dnsResponse) throws NullPointerException {
-        return dnsResponse.getAnswers().get(0).getData().toString();
     }
 }

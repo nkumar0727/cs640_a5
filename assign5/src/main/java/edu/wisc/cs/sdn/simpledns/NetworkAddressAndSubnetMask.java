@@ -10,6 +10,10 @@ class NetworkAddressAndSubnetMask {
         this.subnetMask = subnetMask;
     }
 
+    public String toString() {
+        return String.format("IP: %d, Mask: %d", networkAddress, subnetMask);
+    }
+
     boolean isMatchingIPAddress(final int ipAddress) {
         return (networkAddress & subnetMask) == (ipAddress & subnetMask);
     }

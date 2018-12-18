@@ -8,6 +8,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 class DNSRequestResolver {
@@ -24,16 +25,15 @@ class DNSRequestResolver {
         this.csvLoader = csvLoader;
     }
 
-    private void addTXTAnswerIfEC2IP(final List<DNSResourceRecord> additionalEC2Answers, final DNSResourceRecord record,
-                                     final DNS dnsResponse) throws UnknownHostException {
+    private void addTXTAnswerIfEC2IP(final List<DNSResourceRecord> additionalEC2Answers, final DNSResourceRecord record)
+            throws UnknownHostException {
 
         final String resolvedIP = record.getData().toString();
         final String ec2Region = csvLoader.getRegionOfIPAddress(resolvedIP);
         if (ec2Region != null) {
             final String txtRecordDataString = String.format("%s-%s", ec2Region, resolvedIP);
             final DNSRdata txtRecordData = new DNSRdataString(txtRecordDataString);
-            final DNSResourceRecord txtRecord = new DNSResourceRecord(dnsResponse.getQuestions().get(0).getName(),
-                    DNS.TYPE_TXT, txtRecordData);
+            final DNSResourceRecord txtRecord = new DNSResourceRecord(record.getName(), DNS.TYPE_TXT, txtRecordData);
             additionalEC2Answers.add(txtRecord);
         }
     }
@@ -49,20 +49,22 @@ class DNSRequestResolver {
             if (answerRecord.getType() != DNS.TYPE_A && answerRecord.getType() != DNS.TYPE_AAAA) {
                 continue;
             }
-            addTXTAnswerIfEC2IP(additionalEC2Answers, answerRecord, dnsResponse);
+            addTXTAnswerIfEC2IP(additionalEC2Answers, answerRecord);
         }
 
         dnsResponse.getAnswers().addAll(additionalEC2Answers);
         return dnsResponse;
     }
 
-    private DNS generateDNSRequestForCNAME(final DNS dnsResponse, final short requestType) {
+    private DNS generateDNSRequestForCNAME(final DNS copyDNSPacket, final DNS dnsResponse, final short requestType) {
+        final DNS dns = DNS.deserialize(copyDNSPacket.serialize(), copyDNSPacket.getLength());
         final String cnameDomain = DNSDatagramHandler.extractCNAMEAnswerFromDNSResponse(dnsResponse);
         final DNSQuestion cnameQuestion = new DNSQuestion(cnameDomain, requestType);
-        return DNSDatagramHandler.generateDNSRequest(cnameQuestion, dnsResponse.getId());
+        dns.setQuestions(Collections.singletonList(cnameQuestion));
+        return dns;
     }
 
-    private List<DNSResourceRecord> getAnswersForRecursiveRequest(final DNS dnsRequest, final InetAddress dnsServerIP)
+    private DNS getResponseForRecursiveRequest(final DNS dnsRequest, final InetAddress dnsServerIP)
             throws IOException {
 
         final short requestType = DNSDatagramHandler.extractRequestTypeFromDNSHeader(dnsRequest);
@@ -71,32 +73,33 @@ class DNSRequestResolver {
 
         while (true) {
 
-            System.out.println("===================================================================");
-            System.out.println("Recursive Request");
-            System.out.println(dnsRequest.toString());
-            System.out.println("===================================================================");
-
             final DNS dnsResponse = dnsQueryResolver.resolveQueryRecursive(currentDNSRequest, dnsServerIP);
             answerList.addAll(dnsResponse.getAnswers());
 
-            System.out.println("===================================================================");
-            System.out.println("Response for Recursive Request");
-            System.out.println(dnsResponse.toString());
-            System.out.println("===================================================================");
-
-            if (!DNSDatagramHandler.dnsResponseContains_CNAMERecord(dnsResponse) || requestType == DNS.TYPE_CNAME) {
-                break;
+            if (DNSDatagramHandler.dnsResponseContainsRecordType(dnsResponse, requestType)) {
+                dnsResponse.setAnswers(answerList);
+                return dnsResponse;
             }
-            currentDNSRequest = generateDNSRequestForCNAME(dnsResponse, requestType);
-        }
 
-        return answerList;
+            currentDNSRequest = generateDNSRequestForCNAME(dnsRequest, dnsResponse, requestType);
+        }
+    }
+
+    private DNS respondToClientDNSRequest(final DNS dnsRequest, final InetAddress dnsServerIP) throws IOException {
+        final DNS dnsResponse = dnsRequest.isRecursionDesired() ?
+                getResponseForRecursiveRequest(dnsRequest, dnsServerIP) :
+                dnsQueryResolver.resolveQueryRecursive(dnsRequest, dnsServerIP);
+        dnsResponse.setQuestions(dnsRequest.getQuestions());
+        return modifyAndReturnResponseWithEC2Records(dnsResponse);
     }
 
     void resolveRequest(final InetAddress dnsServerIP) throws IOException, NullPointerException {
 
         final DatagramPacket dnsPacket = clientToSimpleDNSConnection.waitForAndReceiveDatagramPacket();
         final DNS dnsRequest = DNSDatagramHandler.extractDNSHeaderFromDatagramPacket(dnsPacket);
+        dnsRequest.setAdditional(new ArrayList<>());
+
+        DNSDatagramHandler.printDNS(dnsRequest, dnsServerIP, "CLIENT DNS REQUEST");
 
         if (!DNSDatagramHandler.canHandleDNSRequest(dnsRequest)) {
             System.out.println("Cannot handle: "+dnsRequest.toString());
@@ -106,25 +109,8 @@ class DNSRequestResolver {
         final InetAddress clientIPAddress = dnsPacket.getAddress();
         final int clientPort = dnsPacket.getPort();
 
-        System.out.println("===================================================================");
-        System.out.println("REQUEST");
-        System.out.println(dnsRequest.toString());
-        System.out.println("===================================================================");
-
-        DNS dnsResponse;
-        if (!dnsRequest.isRecursionDesired()) {
-            dnsResponse = dnsQueryResolver.resolveQueryNonRecursive(dnsRequest, dnsServerIP);
-        } else {
-            List<DNSResourceRecord> answerList = getAnswersForRecursiveRequest(dnsRequest, dnsServerIP);
-            dnsResponse = DNSDatagramHandler.generateDNSResponse(dnsRequest, answerList);
-        }
-
-        dnsResponse = modifyAndReturnResponseWithEC2Records(dnsResponse);
-
-        System.out.println("===================================================================");
-        System.out.println("RESPONSE");
-        System.out.println(dnsResponse.toString());
-        System.out.println("===================================================================");
+        final DNS dnsResponse = respondToClientDNSRequest(dnsRequest, dnsServerIP);
+        DNSDatagramHandler.printDNS(dnsResponse, dnsServerIP, "RESPONSE TO CLIENT DNS REQUEST");
 
         clientToSimpleDNSConnection.sendDNSPacket(dnsResponse, clientIPAddress, clientPort);
     }

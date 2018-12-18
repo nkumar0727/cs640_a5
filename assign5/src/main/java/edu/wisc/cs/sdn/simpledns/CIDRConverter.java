@@ -31,7 +31,7 @@ class CIDRConverter {
 
         final InetAddress ipAddress = InetAddress.getByName(networkAddress);
         final ByteBuffer buffer = ByteBuffer.wrap(ipAddress.getAddress());
-        return buffer.get();
+        return buffer.getInt();
     }
 
     static InetAddress convertDottedDecimalStringToInetAddress(final String networkAddress)

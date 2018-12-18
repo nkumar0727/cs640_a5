@@ -56,14 +56,16 @@ the connection.
     ===========================================================================
 
 2a)
-    The following domain names resolve to an Amazon EC2 node:
+    The following domain names resolve to an Amazon EC2 node in the US-EAST-1 region:
         www.code.org
 
 2b)
     The following domain names resolve to a node in the Akamai CDN:
         cdn.optimizely.com
-    The following domain names resolve to a node in the EdgeCast CDN:
+    ** The following domain names resolve to a node in the EdgeCast CDN:
         ocsp.digicert.com
+   
+    ** However, this was determined via a list of IP addresses found on the following form
 
 2c) ????????????????
 
@@ -77,6 +79,8 @@ the connection.
         This was issued under one single connection
 
 2d) ????????????????
+    There were in total, 28 cache hits.
+
     All objects in code.org domain, except for the following, were stored in Cloudfront CDN caches:
         https://code.org/v2/client-location
     
