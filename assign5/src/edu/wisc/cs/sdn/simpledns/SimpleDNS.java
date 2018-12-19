@@ -5,9 +5,9 @@ import java.io.IOException;
 public class SimpleDNS {
 
     private static boolean argumentsAreValid(final String[] args) {
-        return (args.length != 4 ||
-                (!args[0].equals("-r") || !args[2].equals("-e")) ||
-                (!args[2].equals("-r") || !args[0].equals("-e")));
+        return (args.length == 4 &&
+                ((args[0].equals("-r") && args[2].equals("-e")) ||
+                (args[2].equals("-r") && args[0].equals("-e"))));
     }
 
     private static String extractCSVPathFromArgs(final String[] args) {
@@ -21,8 +21,8 @@ public class SimpleDNS {
 	public static void main(String[] args)
 	{
         if (!argumentsAreValid(args)) {
-            System.out.println("Usage:\njava edu.wisc.cs.sdn.simpledns.SimpleDNS -r <root server ip> -e <ec2 csv>\nor");
-            System.out.println("java edu.wisc.cs.sdn.simpledns.SimpleDNS -e <ec2 csv> -r <root server ip>");
+            System.out.println("Usage: java edu.wisc.cs.sdn.simpledns.SimpleDNS -r <ip> -e <ec2>");
+            System.out.println("or:    java edu.wisc.cs.sdn.simpledns.SimpleDNS -e <ec2> -r <ip>");
             return;
         }
 

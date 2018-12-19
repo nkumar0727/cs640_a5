@@ -1,0 +1,612 @@
+java edu.wisc.cs.sdn.simpledns.SimpleDNS -r 198.41.0.4 -e ec2.csv
+===================================================================
+CLIENT DNS REQUEST
+<Root DNS Server IP: 198.41.0.4>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 198.41.0.4>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 198.41.0.4>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 13
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: e.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: b.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: j.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: m.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: i.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: f.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: a.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: g.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: h.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: l.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: k.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: c.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: d.gtld-servers.net
+Additional: 12
+	Name: e.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.12.94.30
+	Name: e.gtld-servers.net, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:502:1ca1:0:0:0:0:30
+	Name: b.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.33.14.30
+	Name: b.gtld-servers.net, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:503:231d:0:0:0:2:30
+	Name: j.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.48.79.30
+	Name: j.gtld-servers.net, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:502:7094:0:0:0:0:30
+	Name: m.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.55.83.30
+	Name: m.gtld-servers.net, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:501:b1f9:0:0:0:0:30
+	Name: i.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.43.172.30
+	Name: i.gtld-servers.net, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:503:39c1:0:0:0:0:30
+	Name: f.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.35.51.30
+	Name: a.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.5.6.30
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 192.12.94.30>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 192.12.94.30>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 4
+	Name: netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-81.awsdns-10.com
+	Name: netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-659.awsdns-18.net
+	Name: netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-1984.awsdns-56.co.uk
+	Name: netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-1372.awsdns-43.org
+Additional: 2
+	Name: ns-81.awsdns-10.com, Type: A, Class: IN, TTL: 172800, Data: 205.251.192.81
+	Name: ns-659.awsdns-18.net, Type: A, Class: IN, TTL: 172800, Data: 205.251.194.147
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 205.251.192.81>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 205.251.192.81>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: true, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.netflix.com, Type: A, Class: IN
+Answers: 1
+	Name: www.netflix.com, Type: CNAME, Class: IN, TTL: 1800, Data: www.geo.netflix.com
+Authority: 4
+	Name: netflix.com, Type: NS, Class: IN, TTL: 14400, Data: ns-1372.awsdns-43.org
+	Name: netflix.com, Type: NS, Class: IN, TTL: 14400, Data: ns-1984.awsdns-56.co.uk
+	Name: netflix.com, Type: NS, Class: IN, TTL: 14400, Data: ns-659.awsdns-18.net
+	Name: netflix.com, Type: NS, Class: IN, TTL: 14400, Data: ns-81.awsdns-10.com
+Additional: 0
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 198.41.0.4>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.geo.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 198.41.0.4>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.geo.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 13
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: e.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: b.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: j.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: m.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: i.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: f.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: a.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: g.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: h.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: l.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: k.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: c.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: d.gtld-servers.net
+Additional: 11
+	Name: e.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.12.94.30
+	Name: e.gtld-servers.net, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:502:1ca1:0:0:0:0:30
+	Name: b.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.33.14.30
+	Name: b.gtld-servers.net, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:503:231d:0:0:0:2:30
+	Name: j.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.48.79.30
+	Name: j.gtld-servers.net, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:502:7094:0:0:0:0:30
+	Name: m.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.55.83.30
+	Name: m.gtld-servers.net, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:501:b1f9:0:0:0:0:30
+	Name: i.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.43.172.30
+	Name: i.gtld-servers.net, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:503:39c1:0:0:0:0:30
+	Name: f.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.35.51.30
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 192.12.94.30>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.geo.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 192.12.94.30>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.geo.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 4
+	Name: netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-81.awsdns-10.com
+	Name: netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-659.awsdns-18.net
+	Name: netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-1984.awsdns-56.co.uk
+	Name: netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-1372.awsdns-43.org
+Additional: 2
+	Name: ns-81.awsdns-10.com, Type: A, Class: IN, TTL: 172800, Data: 205.251.192.81
+	Name: ns-659.awsdns-18.net, Type: A, Class: IN, TTL: 172800, Data: 205.251.194.147
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 205.251.192.81>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.geo.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 205.251.192.81>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.geo.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 4
+	Name: geo.netflix.com, Type: NS, Class: IN, TTL: 1800, Data: pdns154.ultradns.biz
+	Name: geo.netflix.com, Type: NS, Class: IN, TTL: 1800, Data: pdns154.ultradns.com
+	Name: geo.netflix.com, Type: NS, Class: IN, TTL: 1800, Data: pdns154.ultradns.net
+	Name: geo.netflix.com, Type: NS, Class: IN, TTL: 1800, Data: pdns154.ultradns.org
+Additional: 0
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 198.41.0.4>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: pdns154.ultradns.biz, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 198.41.0.4>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: pdns154.ultradns.biz, Type: A, Class: IN
+Answers: 0
+Authority: 6
+	Name: biz, Type: NS, Class: IN, TTL: 172800, Data: k.gtld.biz
+	Name: biz, Type: NS, Class: IN, TTL: 172800, Data: f.gtld.biz
+	Name: biz, Type: NS, Class: IN, TTL: 172800, Data: a.gtld.biz
+	Name: biz, Type: NS, Class: IN, TTL: 172800, Data: b.gtld.biz
+	Name: biz, Type: NS, Class: IN, TTL: 172800, Data: c.gtld.biz
+	Name: biz, Type: NS, Class: IN, TTL: 172800, Data: e.gtld.biz
+Additional: 9
+	Name: k.gtld.biz, Type: A, Class: IN, TTL: 172800, Data: 156.154.128.65
+	Name: k.gtld.biz, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:503:e239:0:0:0:3:2
+	Name: f.gtld.biz, Type: A, Class: IN, TTL: 172800, Data: 209.173.58.66
+	Name: f.gtld.biz, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:500:3682:0:0:0:0:12
+	Name: a.gtld.biz, Type: A, Class: IN, TTL: 172800, Data: 156.154.124.65
+	Name: a.gtld.biz, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:502:ad09:0:0:0:0:30
+	Name: b.gtld.biz, Type: A, Class: IN, TTL: 172800, Data: 156.154.125.65
+	Name: c.gtld.biz, Type: A, Class: IN, TTL: 172800, Data: 156.154.127.65
+	Name: e.gtld.biz, Type: A, Class: IN, TTL: 172800, Data: 156.154.126.65
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 156.154.128.65>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: pdns154.ultradns.biz, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 156.154.128.65>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: pdns154.ultradns.biz, Type: A, Class: IN
+Answers: 0
+Authority: 10
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 7200, Data: pdns196.ultradns.info
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 7200, Data: pdns196.ultradns.biz
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 7200, Data: ari.alpha.aridns.net.au
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 7200, Data: pdns196.ultradns.org
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 7200, Data: ari.beta.aridns.net.au
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 7200, Data: pdns196.ultradns.net
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 7200, Data: ari.gamma.aridns.net.au
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 7200, Data: pdns196.ultradns.com
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 7200, Data: pdns196.ultradns.co.uk
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 7200, Data: ari.delta.aridns.net.au
+Additional: 2
+	Name: pdns196.ultradns.biz, Type: A, Class: IN, TTL: 7200, Data: 156.154.66.196
+	Name: pdns196.ultradns.biz, Type: AAAA, Class: IN, TTL: 7200, Data: 2610:a1:1015:0:0:0:0:e8
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 156.154.66.196>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: pdns154.ultradns.biz, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 156.154.66.196>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: true, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: pdns154.ultradns.biz, Type: A, Class: IN
+Answers: 1
+	Name: pdns154.ultradns.biz, Type: A, Class: IN, TTL: 3600, Data: 156.154.66.154
+Authority: 10
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 3600, Data: ari.gamma.aridns.net.au
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 3600, Data: ari.delta.aridns.net.au
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 3600, Data: pdns196.ultradns.info
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 3600, Data: pdns196.ultradns.net
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 3600, Data: ari.beta.aridns.net.au
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 3600, Data: pdns196.ultradns.biz
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 3600, Data: pdns196.ultradns.co.uk
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 3600, Data: pdns196.ultradns.org
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 3600, Data: pdns196.ultradns.com
+	Name: ultradns.biz, Type: NS, Class: IN, TTL: 3600, Data: ari.alpha.aridns.net.au
+Additional: 0
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 156.154.66.154>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.geo.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 156.154.66.154>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: true, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.geo.netflix.com, Type: A, Class: IN
+Answers: 1
+	Name: www.geo.netflix.com, Type: CNAME, Class: IN, TTL: 1800, Data: www.us-west-2.prodaa.netflix.com
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 198.41.0.4>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 198.41.0.4>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 13
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: e.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: b.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: j.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: m.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: i.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: f.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: a.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: g.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: h.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: l.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: k.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: c.gtld-servers.net
+	Name: com, Type: NS, Class: IN, TTL: 172800, Data: d.gtld-servers.net
+Additional: 11
+	Name: e.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.12.94.30
+	Name: e.gtld-servers.net, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:502:1ca1:0:0:0:0:30
+	Name: b.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.33.14.30
+	Name: b.gtld-servers.net, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:503:231d:0:0:0:2:30
+	Name: j.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.48.79.30
+	Name: j.gtld-servers.net, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:502:7094:0:0:0:0:30
+	Name: m.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.55.83.30
+	Name: m.gtld-servers.net, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:501:b1f9:0:0:0:0:30
+	Name: i.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.43.172.30
+	Name: i.gtld-servers.net, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:503:39c1:0:0:0:0:30
+	Name: f.gtld-servers.net, Type: A, Class: IN, TTL: 172800, Data: 192.35.51.30
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 192.12.94.30>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 192.12.94.30>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 4
+	Name: netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-81.awsdns-10.com
+	Name: netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-659.awsdns-18.net
+	Name: netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-1984.awsdns-56.co.uk
+	Name: netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-1372.awsdns-43.org
+Additional: 2
+	Name: ns-81.awsdns-10.com, Type: A, Class: IN, TTL: 172800, Data: 205.251.192.81
+	Name: ns-659.awsdns-18.net, Type: A, Class: IN, TTL: 172800, Data: 205.251.194.147
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 205.251.192.81>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 205.251.192.81>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 4
+	Name: prodaa.netflix.com, Type: NS, Class: IN, TTL: 86400, Data: ns-1489.awsdns-58.org
+	Name: prodaa.netflix.com, Type: NS, Class: IN, TTL: 86400, Data: ns-1606.awsdns-08.co.uk
+	Name: prodaa.netflix.com, Type: NS, Class: IN, TTL: 86400, Data: ns-375.awsdns-46.com
+	Name: prodaa.netflix.com, Type: NS, Class: IN, TTL: 86400, Data: ns-749.awsdns-29.net
+Additional: 0
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 198.41.0.4>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: ns-1489.awsdns-58.org, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 198.41.0.4>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: ns-1489.awsdns-58.org, Type: A, Class: IN
+Answers: 0
+Authority: 6
+	Name: org, Type: NS, Class: IN, TTL: 172800, Data: d0.org.afilias-nst.org
+	Name: org, Type: NS, Class: IN, TTL: 172800, Data: a0.org.afilias-nst.info
+	Name: org, Type: NS, Class: IN, TTL: 172800, Data: c0.org.afilias-nst.info
+	Name: org, Type: NS, Class: IN, TTL: 172800, Data: a2.org.afilias-nst.info
+	Name: org, Type: NS, Class: IN, TTL: 172800, Data: b0.org.afilias-nst.org
+	Name: org, Type: NS, Class: IN, TTL: 172800, Data: b2.org.afilias-nst.org
+Additional: 12
+	Name: d0.org.afilias-nst.org, Type: A, Class: IN, TTL: 172800, Data: 199.19.57.1
+	Name: d0.org.afilias-nst.org, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:500:f:0:0:0:0:1
+	Name: a0.org.afilias-nst.info, Type: A, Class: IN, TTL: 172800, Data: 199.19.56.1
+	Name: a0.org.afilias-nst.info, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:500:e:0:0:0:0:1
+	Name: c0.org.afilias-nst.info, Type: A, Class: IN, TTL: 172800, Data: 199.19.53.1
+	Name: c0.org.afilias-nst.info, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:500:b:0:0:0:0:1
+	Name: a2.org.afilias-nst.info, Type: A, Class: IN, TTL: 172800, Data: 199.249.112.1
+	Name: a2.org.afilias-nst.info, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:500:40:0:0:0:0:1
+	Name: b0.org.afilias-nst.org, Type: A, Class: IN, TTL: 172800, Data: 199.19.54.1
+	Name: b0.org.afilias-nst.org, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:500:c:0:0:0:0:1
+	Name: b2.org.afilias-nst.org, Type: A, Class: IN, TTL: 172800, Data: 199.249.120.1
+	Name: b2.org.afilias-nst.org, Type: AAAA, Class: IN, TTL: 172800, Data: 2001:500:48:0:0:0:0:1
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 199.19.57.1>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: ns-1489.awsdns-58.org, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 199.19.57.1>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: ns-1489.awsdns-58.org, Type: A, Class: IN
+Answers: 0
+Authority: 4
+	Name: awsdns-58.org, Type: NS, Class: IN, TTL: 86400, Data: g-ns-1658.awsdns-58.org
+	Name: awsdns-58.org, Type: NS, Class: IN, TTL: 86400, Data: g-ns-1085.awsdns-58.org
+	Name: awsdns-58.org, Type: NS, Class: IN, TTL: 86400, Data: g-ns-764.awsdns-58.org
+	Name: awsdns-58.org, Type: NS, Class: IN, TTL: 86400, Data: g-ns-186.awsdns-58.org
+Additional: 8
+	Name: g-ns-186.awsdns-58.org, Type: A, Class: IN, TTL: 86400, Data: 205.251.192.186
+	Name: g-ns-764.awsdns-58.org, Type: A, Class: IN, TTL: 86400, Data: 205.251.194.252
+	Name: g-ns-1085.awsdns-58.org, Type: A, Class: IN, TTL: 86400, Data: 205.251.196.61
+	Name: g-ns-1658.awsdns-58.org, Type: A, Class: IN, TTL: 86400, Data: 205.251.198.122
+	Name: g-ns-186.awsdns-58.org, Type: AAAA, Class: IN, TTL: 86400, Data: 2600:9000:5300:ba00:0:0:0:1
+	Name: g-ns-764.awsdns-58.org, Type: AAAA, Class: IN, TTL: 86400, Data: 2600:9000:5302:fc00:0:0:0:1
+	Name: g-ns-1085.awsdns-58.org, Type: AAAA, Class: IN, TTL: 86400, Data: 2600:9000:5304:3d00:0:0:0:1
+	Name: g-ns-1658.awsdns-58.org, Type: AAAA, Class: IN, TTL: 86400, Data: 2600:9000:5306:7a00:0:0:0:1
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 205.251.198.122>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: ns-1489.awsdns-58.org, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 205.251.198.122>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: true, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: ns-1489.awsdns-58.org, Type: A, Class: IN
+Answers: 1
+	Name: ns-1489.awsdns-58.org, Type: A, Class: IN, TTL: 172800, Data: 205.251.197.209
+Authority: 4
+	Name: awsdns-58.org, Type: NS, Class: IN, TTL: 172800, Data: g-ns-1085.awsdns-58.org
+	Name: awsdns-58.org, Type: NS, Class: IN, TTL: 172800, Data: g-ns-1658.awsdns-58.org
+	Name: awsdns-58.org, Type: NS, Class: IN, TTL: 172800, Data: g-ns-186.awsdns-58.org
+	Name: awsdns-58.org, Type: NS, Class: IN, TTL: 172800, Data: g-ns-764.awsdns-58.org
+Additional: 8
+	Name: g-ns-1085.awsdns-58.org, Type: A, Class: IN, TTL: 172800, Data: 205.251.196.61
+	Name: g-ns-1085.awsdns-58.org, Type: AAAA, Class: IN, TTL: 172800, Data: 2600:9000:5304:3d00:0:0:0:1
+	Name: g-ns-1658.awsdns-58.org, Type: A, Class: IN, TTL: 172800, Data: 205.251.198.122
+	Name: g-ns-1658.awsdns-58.org, Type: AAAA, Class: IN, TTL: 172800, Data: 2600:9000:5306:7a00:0:0:0:1
+	Name: g-ns-186.awsdns-58.org, Type: A, Class: IN, TTL: 172800, Data: 205.251.192.186
+	Name: g-ns-186.awsdns-58.org, Type: AAAA, Class: IN, TTL: 172800, Data: 2600:9000:5300:ba00:0:0:0:1
+	Name: g-ns-764.awsdns-58.org, Type: A, Class: IN, TTL: 172800, Data: 205.251.194.252
+	Name: g-ns-764.awsdns-58.org, Type: AAAA, Class: IN, TTL: 172800, Data: 2600:9000:5302:fc00:0:0:0:1
+
+===================================================================
+===================================================================
+Recursive Query Sub-Request
+<Root DNS Server IP: 205.251.197.209>
+ID: 0x0da1, Query, Opcode: Standard query, Return Code: No error, Authoritative: false, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN
+Answers: 0
+Authority: 0
+Additional: 0
+
+===================================================================
+===================================================================
+Response for Recursive Query Sub-Request
+<Root DNS Server IP: 205.251.197.209>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: true, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN
+Answers: 8
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN, TTL: 60, Data: 52.43.223.181
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN, TTL: 60, Data: 52.37.16.190
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN, TTL: 60, Data: 54.68.184.7
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN, TTL: 60, Data: 52.41.111.100
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN, TTL: 60, Data: 52.41.246.122
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN, TTL: 60, Data: 52.25.169.106
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN, TTL: 60, Data: 54.200.92.151
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN, TTL: 60, Data: 52.35.228.185
+Authority: 4
+	Name: prodaa.netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-1489.awsdns-58.org
+	Name: prodaa.netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-1606.awsdns-08.co.uk
+	Name: prodaa.netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-375.awsdns-46.com
+	Name: prodaa.netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-749.awsdns-29.net
+Additional: 0
+
+===================================================================
+===================================================================
+RESPONSE TO CLIENT DNS REQUEST
+<Root DNS Server IP: 198.41.0.4>
+ID: 0x0da1, Response, Opcode: Standard query, Return Code: No error, Authoritative: true, Truncated: false, Recursion desired: true, Recursion avail: false
+Questions: 1
+	Name: www.netflix.com, Type: A, Class: IN
+Answers: 12
+	Name: www.netflix.com, Type: CNAME, Class: IN, TTL: 1800, Data: www.geo.netflix.com
+	Name: www.geo.netflix.com, Type: CNAME, Class: IN, TTL: 1800, Data: www.us-west-2.prodaa.netflix.com
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN, TTL: 60, Data: 52.43.223.181
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN, TTL: 60, Data: 52.37.16.190
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN, TTL: 60, Data: 54.68.184.7
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN, TTL: 60, Data: 52.41.111.100
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN, TTL: 60, Data: 52.41.246.122
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN, TTL: 60, Data: 52.25.169.106
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN, TTL: 60, Data: 54.200.92.151
+	Name: www.us-west-2.prodaa.netflix.com, Type: A, Class: IN, TTL: 60, Data: 52.35.228.185
+	Name: www.us-west-2.prodaa.netflix.com, Type: Unknown (16), Class: IN, TTL: 0, Data: Oregon-54.68.184.7
+	Name: www.us-west-2.prodaa.netflix.com, Type: Unknown (16), Class: IN, TTL: 0, Data: Oregon-54.200.92.151
+Authority: 4
+	Name: prodaa.netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-1489.awsdns-58.org
+	Name: prodaa.netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-1606.awsdns-08.co.uk
+	Name: prodaa.netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-375.awsdns-46.com
+	Name: prodaa.netflix.com, Type: NS, Class: IN, TTL: 172800, Data: ns-749.awsdns-29.net
+Additional: 0
+
+===================================================================
+Makefile:30: recipe for target 'run' failed
